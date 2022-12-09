@@ -13,7 +13,7 @@ $(document).ready(() => {
 fetch("https://lizard-positive-cook.glitch.me/movies").then(resp => resp.json()).then(data => {
     const titles = data.map(data => data.title)
     const ratings = data.map(data => data.rating)
-    $("#movies").empty()
+    $("#movies").empty();
     for (let i = 0; i < data.length; i++) {
         $("#movies").append(`${titles[i]}${ratings[i]}`)
     }
@@ -28,7 +28,9 @@ fetch("https://lizard-positive-cook.glitch.me/movies").then(resp => resp.json())
 //
 // Create a form for adding a new movie that has fields for the movie's title and rating
 // When the form is submitted, the page should not reload / refresh, instead, your javascript should make a POST request to /movies with the information the user put into the form
-
+$("#submit-button").click(e => {
+    e.preventDefault()
+})
 
 //UPDATE - PUT/PATCH
 // Allow users to edit existing movies
