@@ -1,0 +1,5 @@
+TODO:
+
+1. figure out how to put x amount of stars correlating with the rating number (uncle google)
+2. implement radio buttons for movie card creation
+3. how to actually use omdb api `http://img.omdbapi.com/?apikey=${ombdKey}&${refTitle}`

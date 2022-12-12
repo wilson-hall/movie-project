@@ -1,6 +1,11 @@
-/*.hidden {*/
-/*    display: none;*/
-/*}*/
 .ref-id {
     display: none;
+}
+
+.edit {
+    /*display: inline;*/
+}
+
+.delete {
+    /*display: inline;*/
 }
