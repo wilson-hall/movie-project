@@ -47,6 +47,7 @@ const getMovies = () => {
             $('#rating').val(refRating);
 
             $('#submit-button').toggleClass('hidden');
+            $('#save-button').toggleClass('hidden');
         });
 
         $(".delete").click(function (e) {
@@ -97,6 +98,7 @@ const getMovies = () => {
                 $('#title').val('')
                 $('#rating').val('')
                 $('#save-button').toggleClass('hidden');
+                $('#submit-button').toggleClass('hidden');
 
                 getMovies();
             });
