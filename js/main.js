@@ -9,6 +9,7 @@
 // When the initial AJAX request comes back, remove the "loading..." message and replace it with HTML generated from the json response your code receives
 
 const edit = "<a href='#'>Edit</a>"
+let idArr = [];
 
 $(document).ready(() => {
     $('div#movies').html("Loading...")
@@ -25,7 +26,7 @@ fetch("https://lizard-positive-cook.glitch.me/movies").then(resp => resp.json())
 
     // refills the container with every movie that has been passed to server
     for (let i = 0; i < data.length; i++) {
-        $("#movies").append(`<p><span class="ref-title">${titles[i]}</span> <span class="ref-rating">${ratings[i]}</span> ${edit}</p>`)
+        $("#movies").append(`<p><span class="ref-title">${titles[i]}</span> <span class="ref-rating">${ratings[i]}</span> <span class="ref-id">${id[i]}</span> ${edit}</p>`)
     }
 
     // edit button functionality
@@ -33,10 +34,9 @@ fetch("https://lizard-positive-cook.glitch.me/movies").then(resp => resp.json())
         e.preventDefault();
         let refTitle = $(this).siblings('span.ref-title').html();
         let refRating = $(this).siblings('span.ref-rating').html();
-        // TODO: get index of title to associate with id
-        // const index =
-        console.log(data[5].id)
-
+        let refID = $(this).siblings('span.ref-id').html();
+        idArr.push(refID)
+        console.log(refID)
         console.log(refTitle);
         console.log(refRating);
 
@@ -53,14 +53,21 @@ fetch("https://lizard-positive-cook.glitch.me/movies").then(resp => resp.json())
     console.log(ratings)
     console.log(data)
 }).then(() => {
+    //UPDATE - PUT/PATCH
+// Allow users to edit existing movies
+//
+// Give users the option to edit an existing movie
+// A form should be pre-populated with the selected movie's details
+// Like creating a movie, this should not involve any page reloads, instead your javascript code should make an ajax request when the form is submitted.
 $("#save-button").click(e => {
     e.preventDefault()
     const editedMovie = {
         title: $("#title").val(),
         rating: $("#rating").val()
     }
+    console.log(idArr)
 
-    fetch(`https://lizard-positive-cook.glitch.me/movies/${id}`, {
+    fetch(`https://lizard-positive-cook.glitch.me/movies/${idArr}`, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json'
@@ -117,62 +124,6 @@ $("#add-movie").submit(e => {
             }))
 })
 
-
-//UPDATE - PUT/PATCH
-// Allow users to edit existing movies
-//
-// Give users the option to edit an existing movie
-// A form should be pre-populated with the selected movie's details
-// Like creating a movie, this should not involve any page reloads, instead your javascript code should make an ajax request when the form is submitted.
-
-// $("#edit-movie").submit(e => {
-//     e.preventDefault()
-//     const editedMovie = {
-//         title: $("#title").val(),
-//         rating: $("#rating").val()
-//     };
-//     fetch(`https://lizard-positive-cook.glitch.me/movies/1`, {
-//         method: 'PUT',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(editedMovie),
-//     })
-//         .then(() => fetch("https://lizard-positive-cook.glitch.me/movies")
-//             .then(resp => resp.json())
-//             .then(data => {
-//                 const editedTitles = data.map(data => data.title)
-//                 const editedRatings = data.map(data => data.rating)
-//                 $("#movies").empty();
-//                 for (let i = 0; i < data.length; i++) {
-//                     $("#movies").append(`<p><span class="ref-title">${editedTitles[i]}</span> <span class="ref-rating">${editedRatings[i]}</span>`);
-//                 }
-//                 console.log(editedMovie)
-//                 console.log(data)
-//             }))
-// })
-
-// $("#save-button").click(e => {
-//     e.preventDefault()
-//     const editedMovie = {
-//         title: $("#title").val(),
-//         rating: $("#rating").val()
-//     }
-//     fetch("https://lizard-positive-cook.glitch.me/movies/10", {
-//         method: "PUT",
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(editedMovie)
-//     }).then(() => fetch("https://lizard-positive-cook.glitch.me/movies")).then(resp => resp.json()).then(data => {
-//         const editedTitles = data.map(data => data.title)
-//         const editedRatings = data.map(data => data.rating)
-//         $("#movies").empty();
-//         for (let i = 0; i < data.length; i++) {
-//             $("#movies").append(`<p><span class="ref-title">${editedTitles[i]}</span> <span class="ref-rating">${editedRatings[i]}</span>${edit}</p>`);
-//         }
-//     });
-// })
 
 //DELETE
 // Delete movies
