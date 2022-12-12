@@ -10,6 +10,25 @@
 
 const edit = "<a href='#' class='edit'>Edit</a>"
 const deleteBtn = "<a href='#' class='delete'>Delete</a>"
+const saveBtn = () => {return "<form id=\"edit-movie\">\n" +
+    "\t<label for=\"title\"> Enter the movie title\n" +
+    "\t\t<input type=\"text\" name=\"title\" id=\"title\" value=\"\">\n" +
+    "\t</label>\n" +
+    "\t<br>\n" +
+    "\t<label for=\"rating\"> Enter your rating for this movie\n" +
+    "\t\t<input type=\"text\" name=\"rating\" id=\"rating\" value=\"\">\n" +
+    "\t</label><button type=\"submit\" id=\"save-button\" class=\"hidden\">Save</button></form>"}
+
+const submitBtn = () => {
+    return "<form id=\"add-movie\">\n" +
+        "\t<label for=\"title\"> Enter the movie title\n" +
+        "\t\t<input type=\"text\" name=\"title\" id=\"title\" value=\"\">\n" +
+        "\t</label>\n" +
+        "\t<br>\n" +
+        "\t<label for=\"rating\"> Enter your rating for this movie\n" +
+        "\t\t<input type=\"text\" name=\"rating\" id=\"rating\" value=\"\">\n" +
+        "\t</label><button type='submit' id='submit-button' className='hidden'>Submit</button></form>"
+}
 
 let idArr = [];
 
@@ -18,6 +37,9 @@ $(document).ready(() => {
 })
 const getMovies = () => {
     fetch("https://lizard-positive-cook.glitch.me/movies").then(resp => resp.json()).then(data => {
+
+        $("#movie-form").html(submitBtn)
+        // $("#add-movie").html(submitBtn)
         // variable declaration
         const titles = data.map(data => data.title)
         const ratings = data.map(data => data.rating)
@@ -37,17 +59,18 @@ const getMovies = () => {
             let refTitle = $(this).siblings('span.ref-title').html();
             let refRating = $(this).siblings('span.ref-rating').html();
             let refID = $(this).siblings('span.ref-id').html();
-            idArr.push(refID)
-            console.log(idArr);
+
+
             console.log(refID)
             console.log(refTitle);
             console.log(refRating);
+            $("#movie-form").html(saveBtn)
 
             $('#title').val(refTitle);
             $('#rating').val(refRating);
-
-            $('#submit-button').toggleClass('hidden');
-            $('#save-button').toggleClass('hidden');
+            saveButtonFunctionality(refID);
+            // $('#submit-button').toggleClass('hidden');
+            // $('#save-button').toggleClass('hidden');
         });
 
         $(".delete").click(function (e) {
@@ -57,7 +80,7 @@ const getMovies = () => {
             console.log(refID)
             console.log(idArr)
             if (e) {
-                fetch(`https://lizard-positive-cook.glitch.me/movies/${idArr}`, {
+                fetch(`https://lizard-positive-cook.glitch.me/movies/${refID}`, {
                     method: "DELETE"
                 }).then(() => {
                     idArr = []
@@ -74,34 +97,37 @@ const getMovies = () => {
         console.log(ratings)
         console.log(data)
 
-        $("#save-button").click(e => {
-            e.preventDefault()
-            const editedMovie = {
-                title: $("#title").val(),
-                rating: $("#rating").val()
-            }
-            console.log(idArr)
+    });
+}
 
-            fetch(`https://lizard-positive-cook.glitch.me/movies/${idArr}`, {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(editedMovie)
-            }).then(() => {
-                // const editedTitles = data.map(data => data.title)
-                // const editedRatings = data.map(data => data.rating)
-                // const id = data.map(data => data.id)
-                idArr = []
-                // console.log(idArr)
+const saveButtonFunctionality = (refID) => {
+    $("#edit-movie").submit(e => {
+        e.preventDefault()
+        const editedMovie = {
+            title: $("#title").val(),
+            rating: $("#rating").val()
+        }
+        console.log(idArr)
 
-                $('#title').val('')
-                $('#rating').val('')
-                $('#save-button').toggleClass('hidden');
-                $('#submit-button').toggleClass('hidden');
+        fetch(`https://lizard-positive-cook.glitch.me/movies/${refID}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(editedMovie)
+        }).then(() => {
+            // const editedTitles = data.map(data => data.title)
+            // const editedRatings = data.map(data => data.rating)
+            // const id = data.map(data => data.id)
+            idArr = []
+            // console.log(idArr)
 
-                getMovies();
-            });
+            $('#title').val('')
+            $('#rating').val('')
+            // $('#save-button').toggleClass('hidden');
+            // $('#submit-button').toggleClass('hidden');
+            // $("#buttons").empty();
+            getMovies();
         });
     });
 }
@@ -137,12 +163,7 @@ $("#add-movie").submit(e => {
         .then(() => fetch("https://lizard-positive-cook.glitch.me/movies")
             .then(resp => resp.json())
             .then(data => {
-                const newTitles = data.map(data => data.title)
-                const newRatings = data.map(data => data.rating)
-                $("#movies").empty();
-                for (let i = 0; i < data.length; i++) {
-                    $("#movies").append(`<p><span class="ref-title">${newTitles[i]}</span> <span class="ref-rating">${newRatings[i]}</span> ${edit}</p> `)
-                }
+                getMovies();
                 console.log(newMovie)
                 console.log(data)
             }))
