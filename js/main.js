@@ -8,7 +8,8 @@
 // Make an AJAX request to get a listing of all the movies
 // When the initial AJAX request comes back, remove the "loading..." message and replace it with HTML generated from the json response your code receives
 
-const edit = "<a href='#'>Edit</a>"
+const edit = "<a href='#' class='edit'>Edit</a>"
+const deleteBtn = "<a href='#' class='delete'>Delete</a>"
 let idArr = [];
 
 $(document).ready(() => {
@@ -26,11 +27,11 @@ fetch("https://lizard-positive-cook.glitch.me/movies").then(resp => resp.json())
 
     // refills the container with every movie that has been passed to server
     for (let i = 0; i < data.length; i++) {
-        $("#movies").append(`<p><span class="ref-title">${titles[i]}</span> <span class="ref-rating">${ratings[i]}</span> <span class="ref-id">${id[i]}</span> ${edit}</p>`)
+        $("#movies").append(`<p><span class="ref-title">${titles[i]}</span> <span class="ref-rating">${ratings[i]}</span> <span class="ref-id">${id[i]}</span> ${edit} ${deleteBtn}</p>`)
     }
 
     // edit button functionality
-    $('a').click(function (e) {
+    $('.edit').click(function (e) {
         e.preventDefault();
         let refTitle = $(this).siblings('span.ref-title').html();
         let refRating = $(this).siblings('span.ref-rating').html();
@@ -47,6 +48,22 @@ fetch("https://lizard-positive-cook.glitch.me/movies").then(resp => resp.json())
 
         $('#submit-button').attr('id', 'save-button');
         $('#add-movie').attr('id', 'edit-movie');
+    })
+
+    $(".delete").click(function (e) {
+        e = confirm("Are you sure you want to delete this movie?")
+        let refID = $(this).siblings('span.ref-id').html();
+        idArr.push(refID)
+        console.log(refID)
+        console.log(idArr)
+        if (e) {
+            fetch(`https://lizard-positive-cook.glitch.me/movies/${idArr}`, {
+                method: "DELETE"
+            }).then(() => fetch("https://lizard-positive-cook.glitch.me/movies")).then(resp => resp.json()).then(movies => {
+                console.log(movies)
+                idArr = []
+            });
+        }
     })
 
     console.log(titles)
@@ -76,6 +93,8 @@ $("#save-button").click(e => {
     }).then(() => fetch("https://lizard-positive-cook.glitch.me/movies")).then(resp => resp.json()).then(data => {
         const editedTitles = data.map(data => data.title)
         const editedRatings = data.map(data => data.rating)
+        idArr = []
+        console.log(idArr)
         $("#movies").empty();
         for (let i = 0; i < data.length; i++) {
             $("#movies").append(`<p><span class="ref-title">${editedTitles[i]}</span> <span class="ref-rating">${editedRatings[i]}</span>${edit}</p>`);
@@ -130,3 +149,4 @@ $("#add-movie").submit(e => {
 //
 // Each movie should have a "delete" button
 // When this button is clicked, your javascript should send a DELETE request
+
