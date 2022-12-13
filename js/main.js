@@ -22,15 +22,15 @@ const getMovies = () => {
 
             // refills the container with every movie that has been passed to server
             for (let i = 0; i < data.length; i++) {
-                $("#movies").append(`<p class="card col-4 p-0 text-center"><img src="${posters[i]}"><span class="ref-title">${titles[i]}</span> <span class="ref-rating">${ratings[i]}</span> <span class="ref-id">${id[i]}</span> ${edit} ${deleteBtn}</p>`)
+                $("#movies").append(`<div style="max-height: 400px" class="card col-4 p-0 text-center align-items-stretch"><img style="max-height: 250px" src="${posters[i]}"><span class="ref-title">${titles[i]}</span> <span class="ref-rating">${ratings[i]}</span> <span class="ref-id">${id[i]}</span> <div class="">${edit} ${deleteBtn}</div></div>`)
             }
 
             // edit button functionality
             $('.edit').click(function (e) {
                 e.preventDefault();
-                let refTitle = $(this).siblings('span.ref-title').html();
-                let refRating = $(this).siblings('span.ref-rating').html();
-                let refID = $(this).siblings('span.ref-id').html();
+                let refTitle = $(this).parent().siblings('span.ref-title').html();
+                let refRating = $(this).parent().siblings('span.ref-rating').html();
+                let refID = $(this).parent().siblings('span.ref-id').html();
                 let stars = document.getElementsByClassName('star');
                 $("#movie-form").html(saveForm)
                 // console.log(refRating)
@@ -52,7 +52,7 @@ const getMovies = () => {
 
             $(".delete").click(function (e) {
                 e = confirm("Are you sure you want to delete this movie?")
-                let refID = $(this).siblings('span.ref-id').html();
+                let refID = $(this).parent().siblings('span.ref-id').html();
                 if (e) {
                     fetch(`https://lizard-positive-cook.glitch.me/movies/${refID}`, {
                         method: "DELETE"
