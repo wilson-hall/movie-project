@@ -1,24 +1,86 @@
+body {
+    background-color: #141313!important;
+    color: white!important;
+}
+
+.card {
+    background-color: #1D1C1C!important;
+}
+
+form {
+    margin: .5em 0 0 .5em;
+}
+
+label {
+    margin-top: .5em;
+}
+
 .ref-id {
     display: none;
 }
+
 #navbar {
     background-color: steelblue;
     margin-bottom: 6px;
 }
+
 .edit {
     width: 50%;
     float: left;
 }
+
 .delete {
     width: 50%;
     float: right;
 }
+
 a.edit {
     display: flex;
     flex-direction: row;
 }
+
 a.delete {
     display: flex;
     flex-direction: row;
     float: right;
+}
+
+#submit-button {
+    margin: 1.1em;
+}
+
+.rating {
+    float:left;
+    border:none;
+}
+.rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0, 0, 0, 0);
+}
+.rating:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:200%;
+    line-height:1.2;
+    color:#ddd;
+}
+.rating:not(:checked) > label:before {
+    content:'★ ';
+}
+.rating > input:checked ~ label {
+    color: #f70;
+}
+.rating:not(:checked) > label:hover, .rating:not(:checked) > label:hover ~ label {
+    color: gold;
+}
+.rating > input:checked + label:hover, .rating > input:checked + label:hover ~ label, .rating > input:checked ~ label:hover, .rating > input:checked ~ label:hover ~ label, .rating > label:hover ~ input:checked ~ label {
+    color: #ea0;
+}
+.rating > label:active {
+    position:relative;
 }

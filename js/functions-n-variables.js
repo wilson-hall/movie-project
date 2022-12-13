@@ -32,27 +32,54 @@ const saveForm = () => {
 </form>`
 };
 
+// const submitForm = () => {
+//     return `<form id="add-movie">
+// \t<label for="title"> Enter the movie title
+// \t\t<input type="text" name="title" id="title">
+// \t\t</label>
+// \t<br>
+// \t<input type="radio" id="1-star" name="star" value="1"
+// \t\t>
+// \t<label for="1-star">1</label>
+// \t<input type="radio" id="2-star" name="star" value="2"
+// \t\t>
+// \t<label for="2-star">2</label>
+// \t<input type="radio" id="3-star" name="star" value="3"
+// \t\t>
+// \t<label for="3-star">3</label>
+// \t<input type="radio" id="4-star" name="star" value="4"
+// \t\t>
+// \t<label for="4-star">4</label>
+// \t<input type="radio" id="5-star" name="star" value="5"
+// \t\t>
+// \t<label for="5-star">5</label>
+// \t<button type='submit' id='submit-button' className='hidden'>Submit</button>
+// </form>`
+// };
 const submitForm = () => {
     return `<form id="add-movie">
 \t<label for="title"> Enter the movie title
 \t\t<input type="text" name="title" id="title">
 \t\t</label>
 \t<br>
+<!--WHY CLICK 4 BUT 2 COME UP?-->
+<fieldset class="rating"
 \t<input type="radio" id="1-star" name="star" value="1"
 \t\t>
-\t<label for="1-star">1</label>
+\t<label for="5-star">5</label>
 \t<input type="radio" id="2-star" name="star" value="2"
 \t\t>
-\t<label for="2-star">2</label>
+\t<label for="4-star">4</label>
 \t<input type="radio" id="3-star" name="star" value="3"
 \t\t>
 \t<label for="3-star">3</label>
 \t<input type="radio" id="4-star" name="star" value="4"
 \t\t>
-\t<label for="4-star">4</label>
+\t<label for="2-star">2</label>
 \t<input type="radio" id="5-star" name="star" value="5"
 \t\t>
-\t<label for="5-star">5</label>
+\t<label for="1-star">1</label>
+</fieldset>
 \t<button type='submit' id='submit-button' className='hidden'>Submit</button>
 </form>`
 };

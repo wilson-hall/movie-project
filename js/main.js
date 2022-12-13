@@ -22,26 +22,21 @@ const getMovies = () => {
 
             // refills the container with every movie that has been passed to server
             for (let i = 0; i < data.length; i++) {
-                $("#movies").append(`<div style="max-height: 400px" class="card col-4 p-0 text-center align-items-stretch"><img style="max-height: 250px" src="${posters[i]}"><span class="ref-title">${titles[i]}</span> <span class="ref-rating">${ratings[i]}</span> <span class="ref-id">${id[i]}</span> <div class="">${edit} ${deleteBtn}</div></div>`)
+                $("#movies").append(`<div style="max-height: 400px" class="card col-4 p-0 text-center align-items-stretch"><img style="max-height: 250px" src="${posters[i]}"><span class="ref-title">${titles[i]}</span> <span class="show-rating">${turnRatingIntoStars(ratings[i])}</span> <input type="hidden" class="ref-rating" value="${ratings[i]}"><span class="ref-id">${id[i]}</span> <div class="">${edit} ${deleteBtn}</div></div>`)
             }
 
             // edit button functionality
             $('.edit').click(function (e) {
                 e.preventDefault();
                 let refTitle = $(this).parent().siblings('span.ref-title').html();
-                let refRating = $(this).parent().siblings('span.ref-rating').html();
+                let refRating = $(this).parent().siblings('input.ref-rating').val();
                 let refID = $(this).parent().siblings('span.ref-id').html();
                 let stars = document.getElementsByClassName('star');
                 $("#movie-form").html(saveForm)
-                // console.log(refRating)
-                // console.log(stars[0].value)
 
                 $('#title').val(refTitle);
-                // $('#rating').val(refRating);
                 for (let i = 0; i < stars.length; i++) {
                     if (stars[i].value === refRating) {
-                        console.log(stars[i].value)
-                        console.log(refRating)
                         $('input[name="star"]').eq(i).prop('checked', true);
                         break;
                     }
@@ -64,15 +59,16 @@ const getMovies = () => {
                 }
             })
             addMovieFunctionality();
+            turnRatingIntoStars();
         });
 };
 
 const moviePosters = (title) => {
-        return fetch(`https://www.omdbapi.com/?t=${title}&apikey=${OMDB_API_KEY}`)
-            .then(resp => resp.json())
-            .then((poster) => {
-                console.log(poster)
-                return poster.Poster
+    return fetch(`https://www.omdbapi.com/?t=${title}&apikey=${OMDB_API_KEY}`)
+        .then(resp => resp.json())
+        .then((poster) => {
+            console.log(poster)
+            return poster.Poster
         })
 }
 
@@ -80,25 +76,25 @@ const saveButtonFunctionality = (refID) => {
     $("#edit-movie").submit(e => {
         e.preventDefault()
         moviePosters($("#title").val()).then((poster) => {
-        const editedMovie = {
-            title: $("#title").val(),
-            rating: document.querySelector('input[name="star"]:checked').value,
-            poster
-        }
+            const editedMovie = {
+                title: $("#title").val(),
+                rating: document.querySelector('input[name="star"]:checked').value,
+                poster
+            }
 
-        fetch(`https://lizard-positive-cook.glitch.me/movies/${refID}`, {
-            method: "PUT",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(editedMovie)
-        }).then(() => {
-            $('#title').val('')
-            $('#rating').val('')
+            fetch(`https://lizard-positive-cook.glitch.me/movies/${refID}`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(editedMovie)
+            }).then(() => {
+                $('#title').val('')
+                $('#rating').val('')
 
-            getMovies();
+                getMovies();
+            });
         });
-    });
     });
 };
 
@@ -108,23 +104,31 @@ const addMovieFunctionality = () => {
     $("#add-movie").submit(e => {
         e.preventDefault()
         moviePosters($("#title").val()).then((poster) => {
-        const newMovie = {
-            title: $("#title").val(),
-            rating: document.querySelector('input[name="star"]:checked').value,
-            poster
-        };
-        fetch("https://lizard-positive-cook.glitch.me/movies", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newMovie),
-        })
-            .then(() => fetch("https://lizard-positive-cook.glitch.me/movies")
-                .then(resp => resp.json())
-                .then(data => {
-                    getMovies();
-                }))
+            const newMovie = {
+                title: $("#title").val(),
+                rating: document.querySelector('input[name="star"]:checked').value,
+                poster
+            };
+            fetch("https://lizard-positive-cook.glitch.me/movies", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newMovie),
+            })
+                .then(() => fetch("https://lizard-positive-cook.glitch.me/movies")
+                    .then(resp => resp.json())
+                    .then(data => {
+                        getMovies();
+                    }))
+        });
     });
-    });
+}
+
+const turnRatingIntoStars = (num) => {
+    let htmlStr = ''
+    for (num; num > 0; num--) {
+        htmlStr += starImg
+    }
+    return htmlStr
 }
