@@ -1,3 +1,23 @@
 .ref-id {
     display: none;
 }
+#navbar {
+    background-color: steelblue;
+    margin-bottom: 6px;
+}
+.edit {
+    width: 50%;
+}
+.delete {
+    width: 50%;
+    float: right;
+}
+a.edit {
+    display: flex;
+    flex-direction: row;
+}
+a.delete {
+    display: flex;
+    flex-direction: row;
+    float: right;
+}
