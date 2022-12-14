@@ -5,7 +5,7 @@
         $('div#spinner').html(`<div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>`)
-        getMovies(); //This renders the movies
+        getMovies(); //Render movies
     });
 
     const getMovies = () => {

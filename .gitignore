@@ -2,3 +2,8 @@
 *.iml
 .DS_STORE
 js/keys.js
+
+#SEARCH BAR - For possible later use
+#<form class="m-auto d-flex justify-content-center">
+#			<input type="search" class="m-3" id="movie-search" placeholder="Search for movie..." value="">
+#		</form>
