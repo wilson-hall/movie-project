@@ -1,10 +1,10 @@
 body {
-    background-color: #141313!important;
-    color: white!important;
+    background-color: #141313 !important;
+    color: white !important;
 }
 
 .card {
-    background-color: #1D1C1C!important;
+    background-color: #1D1C1C !important;
 }
 
 form {
@@ -16,7 +16,7 @@ form {
 }
 
 #navbar {
-    background-color: steelblue;
+    background-color: #336699;
     margin-bottom: 6px;
 }
 
@@ -53,6 +53,7 @@ a.delete {
 
 .footer-form {
     display: flex;
+    margin-left: 0;
     justify-content: center;
     align-items: center;
     background-color: #1D1C1C;
@@ -69,37 +70,44 @@ a.delete {
 }
 
 .rating {
-    float:left;
-    border:none;
+    float: left;
+    border: none;
 }
+
 .rating:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
-    clip:rect(0, 0, 0, 0);
+    position: absolute;
+    top: -9999px;
+    clip: rect(0, 0, 0, 0);
 }
+
 .rating:not(:checked) > label {
-    float:right;
-    width:1em;
-    padding:0 .1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:200%;
-    line-height:1.2;
-    color:#ddd;
+    float: right;
+    width: 1em;
+    padding: 0 .1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 200%;
+    line-height: 1.2;
+    color: #ddd;
 }
+
 .rating:not(:checked) > label:before {
-    content:'★ ';
+    content: '★ ';
 }
+
 .rating > input:checked ~ label {
     color: #f70;
 }
+
 .rating:not(:checked) > label:hover, .rating:not(:checked) > label:hover ~ label {
     color: gold;
 }
+
 .rating > input:checked + label:hover, .rating > input:checked + label:hover ~ label, .rating > input:checked ~ label:hover, .rating > input:checked ~ label:hover ~ label, .rating > label:hover ~ input:checked ~ label {
     color: #ea0;
 }
+
 .rating > label:active {
-    position:relative;
+    position: relative;
 }
