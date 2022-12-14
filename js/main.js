@@ -5,7 +5,7 @@ $(document).ready(() => {
 });
 
 const getMovies = () => {
-    fetch("https://lizard-positive-cook.glitch.me/movies")
+    fetch("https://billowy-unmarred-coreopsis.glitch.me/movies")
         .then(resp => resp.json())
         .then(data => {
             $("#movie-form").html(submitForm)
@@ -22,7 +22,7 @@ const getMovies = () => {
 
             // refills the container with every movie that has been passed to server
             for (let i = 0; i < data.length; i++) {
-                $("#movies").append(`<div style="max-height: 400px" class="card col-4 p-0 text-center align-items-stretch"><img style="max-height: 250px" src="${posters[i]}"><span class="ref-title">${titles[i]}</span> <span class="show-rating">${turnRatingIntoStars(ratings[i])}</span> <input type="hidden" class="ref-rating" value="${ratings[i]}"><span class="ref-id">${id[i]}</span> <div class="">${edit} ${deleteBtn}</div></div>`)
+                $("#movies").append(`<div class="card col-4 col-lg-3 col-xl-2 p-0 text-center justify-content-between"><img src="${posters[i]}"><span class="ref-title">${titles[i]}</span> <span class="show-rating">${turnRatingIntoStars(ratings[i])}</span> <input type="hidden" class="ref-rating" value="${ratings[i]}"><span class="ref-id">${id[i]}</span> <div>${edit} ${deleteBtn}</div></div>`)
             }
 
             // edit button functionality
@@ -49,7 +49,8 @@ const getMovies = () => {
                 e = confirm("Are you sure you want to delete this movie?")
                 let refID = $(this).parent().siblings('span.ref-id').html();
                 if (e) {
-                    fetch(`https://lizard-positive-cook.glitch.me/movies/${refID}`, {
+                    $(this).parent().parent().slideUp();
+                    fetch(`https://billowy-unmarred-coreopsis.glitch.me/movies/${refID}`, {
                         method: "DELETE"
                     }).then(() => {
                         getMovies();
@@ -68,8 +69,11 @@ const moviePosters = (title) => {
         .then(resp => resp.json())
         .then((poster) => {
             console.log(poster)
+            if (poster.Response === "False") {
+                poster.Poster = 'img/default.jpeg'
+            }
             return poster.Poster
-        })
+        });
 }
 
 const saveButtonFunctionality = (refID) => {
@@ -82,7 +86,7 @@ const saveButtonFunctionality = (refID) => {
                 poster
             }
 
-            fetch(`https://lizard-positive-cook.glitch.me/movies/${refID}`, {
+            fetch(`https://billowy-unmarred-coreopsis.glitch.me/movies/${refID}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'
@@ -104,19 +108,20 @@ const addMovieFunctionality = () => {
     $("#add-movie").submit(e => {
         e.preventDefault()
         moviePosters($("#title").val()).then((poster) => {
+            console.log(poster)
             const newMovie = {
                 title: $("#title").val(),
                 rating: document.querySelector('input[name="star"]:checked').value,
                 poster
             };
-            fetch("https://lizard-positive-cook.glitch.me/movies", {
+            fetch("https://billowy-unmarred-coreopsis.glitch.me/movies", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(newMovie),
             })
-                .then(() => fetch("https://lizard-positive-cook.glitch.me/movies")
+                .then(() => fetch("https://billowy-unmarred-coreopsis.glitch.me/movies")
                     .then(resp => resp.json())
                     .then(data => {
                         getMovies();

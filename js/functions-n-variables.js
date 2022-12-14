@@ -8,27 +8,29 @@ const deleteBtn = "<a href='#' class='delete text-white bg-danger rounded-3 alig
     "</svg>Delete</a>";
 
 const saveForm = () => {
-    return `<form id="edit-movie">
-\t<label for="title"> Enter the movie title
+    return `<form id="edit-movie" class="footer-form">
+\t<label for="title"> Edit your movie
 \t\t<input type="text" name="title" id="title">
 \t\t</label>
 \t<br>
-\t<input type="radio" id="1-star" name="star" class="star" value="1"
+<fieldset class="rating">
+\t<input type="radio" id="1-star" name="star" class="star" value="5"
 \t\t>
 \t<label for="1-star">1</label>
-\t<input type="radio" id="2-star" name="star" class="star" value="2"
+\t<input type="radio" id="2-star" name="star" class="star" value="4"
 \t\t>
 \t<label for="2-star">2</label>
 \t<input type="radio" id="3-star" name="star" class="star" value="3"
 \t\t>
 \t<label for="3-star">3</label>
-\t<input type="radio" id="4-star" name="star" class="star" value="4"
+\t<input type="radio" id="4-star" name="star" class="star" value="2"
 \t\t>
 \t<label for="4-star">4</label>
-\t<input type="radio" id="5-star" name="star" class="star" value="5"
+\t<input type="radio" id="5-star" name="star" class="star" value="1"
 \t\t>
 \t<label for="5-star">5</label>
-\t<button type='submit' id='save-button' className='hidden'>Save</button>
+</fieldset>
+\t<button type='submit' id='save-button'>Save</button>
 </form>`
 };
 
@@ -57,30 +59,29 @@ const saveForm = () => {
 // </form>`
 // };
 const submitForm = () => {
-    return `<form id="add-movie">
-\t<label for="title"> Enter the movie title
-\t\t<input type="text" name="title" id="title">
+    return `<form id="add-movie" class="footer-form">
+\t<label for="title"> Add a movie
+\t\t<input type="text" placeholder="Enter Movie Title..." name="title" id="title">
 \t\t</label>
 \t<br>
-<!--WHY CLICK 4 BUT 2 COME UP?-->
-<fieldset class="rating"
-\t<input type="radio" id="1-star" name="star" value="1"
-\t\t>
-\t<label for="5-star">5</label>
-\t<input type="radio" id="2-star" name="star" value="2"
-\t\t>
-\t<label for="4-star">4</label>
-\t<input type="radio" id="3-star" name="star" value="3"
-\t\t>
-\t<label for="3-star">3</label>
-\t<input type="radio" id="4-star" name="star" value="4"
-\t\t>
-\t<label for="2-star">2</label>
-\t<input type="radio" id="5-star" name="star" value="5"
+<fieldset class="rating">
+\t<input type="radio" id="1-star" name="star" class="star" value="5"
 \t\t>
 \t<label for="1-star">1</label>
+\t<input type="radio" id="2-star" name="star" class="star" value="4"
+\t\t>
+\t<label for="2-star">2</label>
+\t<input type="radio" id="3-star" name="star" class="star" value="3"
+\t\t>
+\t<label for="3-star">3</label>
+\t<input type="radio" id="4-star" name="star" class="star" value="2"
+\t\t>
+\t<label for="4-star">4</label>
+\t<input type="radio" id="5-star" name="star" class="star" value="1"
+\t\t>
+\t<label for="5-star">5</label>
 </fieldset>
-\t<button type='submit' id='submit-button' className='hidden'>Submit</button>
+\t<button type='submit' id='submit-button'>Submit</button>
 </form>`
 };
 
