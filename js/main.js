@@ -2,9 +2,10 @@
 (() => {
 
     $(document).ready(() => {
-        $('div#movies').html(`<div class="spinner-border position-absolute top-50 start-50 translate-middle" role="status">
+        $('div#spinner').html(`<div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>`)
+        getMovies(); //This renders the movies
     });
 
     const getMovies = () => {
@@ -21,6 +22,7 @@
 
                 // empties the container of whatever is currently inside it
                 $("#movies").empty();
+                $("#spinner").empty();
 
                 // refills the container with every movie that has been passed to server
                 for (let i = 0; i < data.length; i++) {
@@ -103,8 +105,6 @@
             });
         });
     };
-
-    getMovies();
 
     const addMovieFunctionality = () => {
         $("#add-movie").submit(e => {
