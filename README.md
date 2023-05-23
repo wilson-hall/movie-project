@@ -1,6 +1,8 @@
 # Movie Project
 This project is a movie application that allows users to add, edit, and delete movies, as well as rate them. It features a user-friendly interface and integrates with OMDB API for movie posters. The app is built with HTML, CSS, JavaScript, and jQuery for a responsive user experience and uses fetch API and RESTful APIs to communicate with a server for storage of movie data.
 
+![movie project video](assets/movieproject-video.gif)
+
 ## Prerequisites
 - OMDB API key
 - Glitch account with remixed version of the Movies Application
